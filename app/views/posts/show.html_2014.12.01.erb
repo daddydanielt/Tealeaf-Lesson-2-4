@@ -1,0 +1,33 @@
+<% if logged_in? %>  
+<div class="pull-right">
+  [<%= link_to 'edit this post', edit_post_path(@post) %>]
+</div>
+<% end %>
+
+<%= link_to 'Back Posts', posts_path %>
+
+<%= render 'shared/content_title', title: @post.title %>
+
+<%= render @post.categories   %>
+
+<div class="well">   
+  <dt>Description:</dt>
+  <dl>    
+    <%= @post.description %></dl>
+  <dl>    
+    <strong>URL:</strong> <%= link_to("Go there.",fix_url(@post.url)) %></dl>
+
+  <dt><%= @post.comments.count %> Comments:</dt>        
+  <ul>
+  <% @post.comments.each do |c| %>
+    <li>
+    <em><%= c.body %></em>
+    <% if c.user_id %>    
+      <%= render 'shared/content_created_by_at', user_name: User.find(c.user_id).username, created_at: c.created_at %>
+    <% end %></li>
+  <% end %></ul>  
+</div>
+
+<%= render 'comments/form' %>
+
+

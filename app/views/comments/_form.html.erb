@@ -1,0 +1,20 @@
+<%= render 'shared/errors', errors: @comment.errors %>
+<% if logged_in? %>  
+<div >
+  <h4>Create a comment</h4>    
+  <!-- Nested Resources form_for -->
+  <!-- 
+  post_comments POST   /posts/:post_id/comments(.:format) comments#create
+  so form_for [@post,@comment], the order must follow the URL.
+  because Rails will call "post_comments_path"
+  -->
+  <%= form_for [@post,@comment] do |f|%>       
+    <div class="control-group"> 
+    <%= f.text_area :body , rows: 5, class: 'span4' %></div>
+
+    <div class="control-group">
+    <%= f.submit "Create the Comment", class: 'btn btn-primary' %></div>
+  <% end %>
+</div>
+<% end %>
+ 
