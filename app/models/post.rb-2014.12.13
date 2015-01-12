@@ -1,0 +1,114 @@
+class Post < ActiveRecord::Base
+  #belongs_to :user
+  belongs_to :creator , foreign_key: 'user_id', class_name: 'User'  
+  
+  has_many :comments
+  has_many :post_categories
+  has_many :categories, through: :post_categories
+
+  #--->  
+  #polymorphic
+  has_many :votes, as: :voteable
+  #--->
+
+  validates :title, presence: true, length: {minimum: 5}
+  validates :description, presence: true
+  validates :url, presence: true, uniqueness: true
+
+  before_save :generate_slug
+
+  def total_votes
+    #self.votes.size
+    up_votes - down_votes
+  end
+
+  def up_votes
+    self.votes.where(vote: true).size
+  end
+
+  def down_votes
+    self.votes.where(vote: false).size
+  end
+   
+
+  def generate_slug
+    # don't change slug, if self.slug is exit.
+    #self.slug = self.title.gsub(" ","-").downcase 
+    #self.slug = slug_uniqueize( self.title.gsub(/\W/," ").split.join("-").downcase )
+    
+
+    if self.title == "Google"  # for testing 
+
+      # ------------------>>
+      # check the prefix, to determine whether the slug will be regenerated or not.              
+      if generate_slug_prefix( self, :title ) == current_slug_prefix( self ) &&
+         generate_slug_suffix( self, :title ) == current_slug_suffix( self ) 
+          # Bypass don't do anyting, because the slug has been made      
+        binding.pry
+      else
+        # Regenerate slug.
+        self.slug = slug_uniqueize(self)
+        binding.pry          
+      end
+      # ------------------>>
+    end
+
+  end
+  
+  # I am here.
+  # make sure slug is uniqueness
+  def slug_uniqueize(obj)        
+
+    # search and counting existing slug 
+    # by pass self.id
+    # order by :id ascs
+    #
+    #objs_all= obj.class.where( title: obj.title).where.not( id: self.id ).order("id asc")  
+    
+    #objs_with_empty_slug = objs_all.where( title: obj.title, slug: [nil,""]).order("id asc")
+
+    #objs_with_slug = objs_all - objs_with_empty_slug
+
+    #if objs_all.size >= 1
+    #  suffix = "-"+( objs_with_slug.count + 1 ).to_s        
+    #end    
+    
+    #slug_prefix( obj.title ) + suffix.to_s        
+    binding.pry
+    generate_slug_prefix( obj, :title ) + generate_slug_suffix( obj )
+    binding.pry
+  end
+
+  
+  def generate_slug_prefix(obj, column)
+    binding.pry
+    obj[column].gsub(/\W/," ").split.join("-").downcase  
+  end
+
+  def generate_slug_suffix( obj )
+    objs_all_exclude_self = obj.class.where( title: obj.title).where.not( id: self.id ).order("id asc")  
+    if objs_all.size >= 1
+      objs_all_include_self = obj.class.where( title: obj.title).order("id asc")
+      self_index = objs_all_include_self.find_index self
+
+      binding.pry
+    else
+      ""
+    end
+  end
+
+  def current_slug_prefix( obj )
+    ( obj.slug && !p.slug.empty? ) ? obj.slug.split("-").first : nil    
+  end
+
+  def current_slug_suffix( obj )
+    ( obj.slug && !p.slug.empty? ) ? obj.slug.split("-").last : nil    
+  end
+
+
+  
+  def to_param
+    self.slug
+  end
+
+end

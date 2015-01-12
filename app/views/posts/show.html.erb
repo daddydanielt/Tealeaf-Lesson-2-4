@@ -6,6 +6,7 @@
 
 <%= link_to 'Back Posts', posts_path %>
 
+
 <%= render 'shared/content_title', title: @post.title %>
 
 <%= render @post.categories   %>
@@ -17,6 +18,7 @@
   <dl>    
     <strong>URL:</strong> <%= link_to("Go there.",fix_url(@post.url)) %></dl>
 </div>
+
 <div class="well">   
 <h4><%= @post.comments.count %> Comments:</h4>    
 <%= render 'comments/comment', comments: @post.comments, show_vote: true, show_creator: true %>

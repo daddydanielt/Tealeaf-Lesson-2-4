@@ -1,0 +1,21 @@
+<% if vote.valid? %>
+  $('#<%= div_id.call( obj ) %>-votes').html("<%= obj.total_votes %>");  
+<% else %>    
+  show_alert('#<%= div_id.call( obj ) %>-votes-flash','alert-errors','You can only vote on this post once.');  
+<% end %>
+
+/**
+  Reference:: http://stackoverflow.com/questions/10082330/dynamically-create-bootstrap-alerts-box-through-javascript
+  Bootstrap Alerts -
+  Function Name - showalert()
+  Inputs - message,alerttype
+  Example - showalert("Invalid Login","alert-error")
+  Types of alerts -- "alert-error","alert-success","alert-info"
+  Required - You only need to add a alert_placeholder div in your html page wherever you want to display these alerts "<div id="alert_placeholder"></div>"  
+**/
+function show_alert(alert_placeholder,alerttype,message)
+{  
+  $(alert_placeholder)
+  .append('<div id="alertdiv" class="span5 alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+  .show();
+}

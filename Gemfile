@@ -1,5 +1,25 @@
 source 'https://rubygems.org'
 
+
+#===========>>
+# Daniel Tseng::
+group :daniel_test do
+  
+  # specifyremote Gem
+  #gem 'voteable_test'
+  
+  # specify version
+  #gem 'voteable_test', '= 0.0.0'
+
+  # testing locally  
+  gem 'voteable_danielt_test', path: '/Users/supersuper/Documents/IT-Tealeaf/Lesson#2-4/Exercise/voteable-gem-3'
+  gem 'slugable_daniel_test', path: '/Users/supersuper/Documents/IT-Tealeaf/Lesson#2-4/Exercise/slugable-gem-1'
+end
+#===========>>
+
+
+
+
 gem 'rails', '4.0.0'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'

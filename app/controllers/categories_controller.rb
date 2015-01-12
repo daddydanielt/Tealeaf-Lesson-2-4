@@ -1,6 +1,9 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only:[:show, :edit, :update]
-  before_action :require_user, except: [:show, :index]
+  
+  #before_action :require_user, except: [:show, :index]
+  before_action :require_user_of_admin, except: [:show, :index]
+
   def index
     @categories =  Category.all
   end
@@ -43,7 +46,9 @@ class CategoriesController < ApplicationController
   end
 
   def set_category
-    @category = Category.find(params[:id])
+    #@category = Category.find(params[:id])
+    @category = Category.find_by(slug: params[:id])
+
     @posts = @category.posts
   end
 

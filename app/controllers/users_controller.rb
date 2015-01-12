@@ -37,12 +37,19 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:username, :password)
+    params.require(:user).permit(:username, :password, :time_zone)
   end
 
   def set_user
     #@user = User.find(params[:id]) 
-    @user = User.where(username: params[:username]).first    
+    # ==========================================>>
+    # Check the routes.rb
+    # we change params's key from :id to :username
+    # => resources :users, only: [:show, :create, :edit, :update],  param: :username
+    #  
+    #@user = User.where(username: params[:username]).first    
+    @user = User.find_by(slug: params[:username])
+    # ==========================================>>
     #binding.pry
   end
 

@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   #----------------------------->>
   # for all controllers and view_templates
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :display_model_class_name_with_slug, :display_model_class_name_with_id
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -16,11 +16,28 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user
-    if !logged_in?
-      flash[:error] = "Must be logged in."
-      redirect_to root_path    
-    end
+    access_denied "Must be logged in." unless logged_in?        
   end
+
+  def require_user_of_admin    
+    access_denied unless logged_in? && current_user.admin?
+  end
+
+  def access_denied(msg = "Permission denied!")
+    flash[:error] =  msg
+    redirect_to root_path    
+  end
+
   #----------------------------->>
+
+  def display_model_class_name_with_slug(obj)    
+    "#{obj.class.name.downcase}-#{obj.slug}"  
+  end
+
+  def display_model_class_name_with_id(obj)    
+    "#{obj.class.name.downcase}-#{obj.id}"  
+  end
+
+  
 
 end

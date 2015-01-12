@@ -13,11 +13,12 @@
 
 
 <% if logged_in? %>
-
   <!-- Post -->
   <div class="nav_item">
     <%= link_to 'New Post', new_post_path, {class:'btn btn-success btn-samll'} %>
   </div>
+<% end %> <!-- end if logged_in? -->
+
 
   <!-- Category -->
   <div class="nav_item btn-group ">
@@ -28,21 +29,21 @@
       <% Category.all.each do |c| %>
         <li><%= link_to c.name, category_path(c) %></li>
       <% end %>
-      <li class='divider'></li>
-            
-      <% if logged_in? %>
-      <li><%= link_to "New Category" ,new_category_path %></li>    
+      <li class='divider'></li>            
+      <% if logged_in? && current_user.admin? %>      
       <li class='divider'></li>    
-      <li>
+      <li>        
         <%= link_to(new_category_path) do %>
           <i class="icon-plus-sign"></i>
           New Category
         <% end %>
       </li>
-      <% end %>
+      <% end %> <!-- end if logged_in? -->
     </ul>
   </div>
 
+
+<% if logged_in? %>
   <!-- user profile -->
   <div class="nav_item btn-group ">
     <%= link_to '#', class: 'btn btn-default dropdown-toggle', 'data-toggle' => 'dropdown' do %>
@@ -66,6 +67,5 @@
       </li>    
     </ul>
   </div>
-
 <% end %> <!-- end if logged_in? -->
 

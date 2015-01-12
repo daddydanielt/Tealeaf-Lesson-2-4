@@ -1,15 +1,22 @@
  class PostsController < ApplicationController
   before_action :require_user, except: [:show, :index]
   before_action :set_posts, only: [:show, :edit, :update, :vote]
-  
+  before_action :require_creator, only: [:edit, :update]
+
 
   # set up instance variable for action
   # redirect base on some condition
 
   def index
     #@posts = Post.all
-    @posts = Post.all.sort_by{ |p| p.total_votes }.reverse #descending sorting
-    
+    @posts = Post.all.sort_by{ |p| p.total_votes }.reverse #descending sorting    
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @posts } #http://0.0.0.0:3000/posts.json
+      format.xml { render xml: @posts } #http://0.0.0.0:3000/posts.xml
+    end
+
   end
 
   def show    
@@ -25,16 +32,11 @@
   
   def create    
          
-    # strong paramerters
-    # so I have to do that.
+    # strong paramerters    
     mass_assignment_attributes = post_params
-    @post = Post.new(mass_assignment_attributes)
-    
-    #@post.creator = User.first #TODO: change once we have authentication
+    @post = Post.new(mass_assignment_attributes)        
     @post.creator = current_user
-
-    #binding.pry
-
+    
     if @post.save
       flash[:notice] = "Your post was created."
       redirect_to posts_path      
@@ -73,14 +75,30 @@
 
     @vote = Vote.create(vote:params[:vote], user_id: current_user.id, voteable:@post)      
     
-    if @vote.valid?
-      flash[:notice] = "Vote <strong>success!</strong> ".html_safe     
-    else
-          
-      flash[:notice] = "You can only vote on this post once."      
+    respond_to do |format|
+      
+      format.html do
+        if @vote.valid?    
+          flash[:notice] = "Vote <strong>success!</strong> ".html_safe     
+        else      
+          flash[:notice] = "You can only vote on this post once."      
+        end
+        redirect_to :back 
+      end
+
+      # Default: Rails will try to render the template file naming the same as the aciton. 
+      # In this case the tmplate file is vote.js.erbs
+      # format.js 
+
+      # Render shared template file
+      #format.js  { render "shared/vote", :locals => {:obj => @post, :vote => @vote} }
+      #format.js  { render "shared/vote", :locals => {obj: @post, vote: @vote} }
+       
+      format.js { render 'shared/vote', :locals => { obj: @post, vote: @vote, div_id: method( :display_model_class_name_with_slug ) } }    
     end
 
-    redirect_to :back
+    
+    
   end 
 
   private
@@ -103,9 +121,16 @@
   end
 
   def set_posts
-    @post = Post.find(params[:id])        
+    
+    #@post = Post.find(params[:id])        
+    # Because we overider to_param method, so now the value param[:id] will be the value of slug column.
+    @post = Post.find_by(slug: params[:id])        
+    
     #@comment = Comment.new(post:@post)
     @comment = Comment.new
   end   
   
+  def require_creator    
+    access_denied unless logged_in? && ( current_user == @post.creator || current_user.admin?)
+  end
 end

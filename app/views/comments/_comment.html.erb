@@ -1,26 +1,32 @@
 <% show_post ||= false #set default value %>
 <% show_creator ||= false #set default value %>
 <% show_vote ||= false %>
-
+  
   <% comments.each do |comment | %>         
-    <% if show_vote  %>      
-    <div class="span0 text-center">      
+    <% if show_vote && comment.valid? %>      
+    
+    <div class='row'>              
+      <div id='<%= display_model_class_name_with_id( comment ) %>-votes-flash'></div>
+    </div> 
+    
+    <div class="span0 text-center">            
       <div class='row'>        
         <% if logged_in? %>
-            <%= link_to vote_post_comment_path(comment.post, comment, vote: true, other_param:"testing"), method: :post, :confirm => "Are you sure?", your_attribute: "your_information" do %>              <i class='icon-arrow-up'></i><%= comment.up_votes %>            
+            <%= link_to vote_post_comment_path(comment.post, comment, vote: true, other_param:"testing"), method: :post, remote: true, :confirm => "Are you sure?", your_attribute: "your_information" do %> 
+              <i class='icon-arrow-up'></i>
             <% end %>
         <% else %>
-          <i class='icon-arrow-up'></i><%= comment.up_votes %>
+          <i class='icon-arrow-up'></i>
         <% end %>
       </div>
-      <div><%= comment.total_votes %> Votes</div>         
+      <div>Toal: <span id='<%= display_model_class_name_with_id( comment ) %>-votes'><%= comment.total_votes %></span></div>         
         <div class='row'>
         <% if logged_in? %>
-          <%= link_to vote_post_comment_path(comment.post,comment, vote: false), method: :post do %>
-            <i class='icon-arrow-down'></i><%= comment.down_votes %>
+          <%= link_to vote_post_comment_path(comment.post,comment, vote: false), method: :post, remote: true do %>
+            <i class='icon-arrow-down'></i>
           <% end %>
         <% else %>
-          <i class='icon-arrow-down'></i><%= comment.down_votes %>
+          <i class='icon-arrow-down'></i>
         <% end %>
       </div>
     </div>    
@@ -35,10 +41,13 @@
       <% if show_post %>
       <small>on</small> <%= link_to comment.post.title, post_path(comment.post) %>
       <% end %>
-      
-      <% if show_creator %>
-      <small>by</small> <%= link_to comment.creator.username, user_path(comment.creator.username) %>
+     
+      <!-- Slug: method-2 -->
+      <% if show_creator %>      
+      <small>by</small> <%= link_to comment.creator.slug, user_path(comment.creator) %>
       <% end %>
+      <!-- ================= -->
+
 
       <span class='quiet'>
       <small>at</small>

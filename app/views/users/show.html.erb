@@ -5,6 +5,7 @@
     <dt>Username:</dt>
     <dd><%= @user.username %></dd>
     <dt>Time zone:</dt>
+    <dd><%= @user.time_zone %></dd>
     <dt>Two factor auth:</dt>
     <dt>Phone:</dt>    
   </dl>
@@ -14,10 +15,10 @@
 
 <ul class='nav nav-tabs' >
   <li class='<%= 'active' if params[:tab] == 'posts' ||  params[:tab].nil? %>'> 
-    <%= link_to "Posts (#{@user.posts.size})", user_path(@user.username, tab: 'posts') %> 
+    <%= link_to "Posts (#{@user.posts.size})", user_path(@user, tab: 'posts') %> 
   </li>
   <li class='<%= 'active' if params[:tab] == 'comments' %>'> 
-    <%= link_to "Comments (#{@user.comments.size})", user_path(@user.username, tab: 'comments') %>
+    <%= link_to "Comments (#{@user.comments.size})", user_path(@user, tab: 'comments') %>
   </li>
 </ul>
 
