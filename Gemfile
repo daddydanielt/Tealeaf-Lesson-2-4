@@ -2,6 +2,13 @@ source 'https://rubygems.org'
 
 
 #===========>>
+group :Haml do
+  gem "haml"
+end
+
+#===========>>
+
+#===========>>
 # Daniel Tseng::
 group :daniel_test do
   
@@ -12,8 +19,8 @@ group :daniel_test do
   #gem 'voteable_test', '= 0.0.0'
 
   # testing locally  
-  gem 'voteable_danielt_test', path: '/Users/supersuper/Documents/IT-Tealeaf/Lesson#2-4/Exercise/voteable-gem-3'
-  gem 'slugable_daniel_test', path: '/Users/supersuper/Documents/IT-Tealeaf/Lesson#2-4/Exercise/slugable-gem-1'
+  gem 'voteable_danielt_test', path: '/Users/iRSR/Documents/IT-Tealeaf/2-4-Lesson/Exercise/voteable-gem-3'
+  gem 'slugable_daniel_test', path: '/Users/iRSR/Documents/IT-Tealeaf/2-4-Lesson/Exercise/slugable-gem-1'
 end
 #===========>>
 
