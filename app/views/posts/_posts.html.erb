@@ -8,11 +8,11 @@
     <div class="span0 text-center">      
     <div class='row'>      
       <% if logged_in? %>
-        <%= link_to vote_post_path(p, vote: true, other_param:"testing"), 
+        <%= link_to vote_post_path(p, vote: true, test_other_param:"testing"), 
                     method: :post, 
                     remote: true,
-                    :confirm => "Are you sure?", 
-                    your_attribute: "your_information"  do %>
+                    :confirm => "Are you sure to vote '#{p.title}'?", 
+                    test_your_attribute: "your_information"  do %>
           <i class='icon-arrow-up'></i>            
         <% end %>
       <% else %>
@@ -32,14 +32,14 @@
     </div>      
     <div class="span8 well">                 
       <%= render p.categories %>                
-      <%= render 'shared/content_title', title: p.title %>           
+      <%= link_to (render 'shared/content_title', title: p.title), p.url  %>           
       <% if p.description %>
         <div>         
           <%= p.description.split(" ").slice(0..3).join(" ") %>          
           <%= link_to "... More", post_path(p) %></div>        
       <% end %>
       <div>        
-        <%= render 'shared/content_created_by_at', user_name: p.creator.username, created_at: p.created_at %>
+        <%= render 'shared/content_created_by_at', user_name: p.creator.username, user_name_slug: p.creator.slug, created_at: p.created_at %>
       </div>
     </div>
   </div>

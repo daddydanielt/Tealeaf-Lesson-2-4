@@ -4,7 +4,6 @@ class UsersController < ApplicationController
 
 
   def show
-    #binding.pry
   end
 
   def new
@@ -22,8 +21,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    
+  def edit    
   end
 
   def update
@@ -49,6 +47,10 @@ class UsersController < ApplicationController
     #  
     #@user = User.where(username: params[:username]).first    
     @user = User.find_by(slug: params[:username])
+    if !@user
+      flash[:notice] = "Sorry, there's no @#{params[:username]}."
+      redirect_to :root unless @user
+    end
     # ==========================================>>
     #binding.pry
   end
