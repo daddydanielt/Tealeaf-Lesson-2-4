@@ -1,29 +1,41 @@
+
 <% if logged_in? %>  
-<div class="pull-right">
-  [<%= link_to 'edit this post', edit_post_path(@post) %>]
-</div>
+  <div class="pull-right">
+    [<%= link_to 'edit this post', edit_post_path(@post) %>]
+  </div>
 <% end %>
 
+<div class="row">       
 <%= link_to 'Back Posts', posts_path %>
+</div>
+<hr/>
 
 
-<%= render 'shared/content_title', title: @post.title %>
+<div class="row">       
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <%= render @post.categories   %>  
+      <%= link_to (render 'shared/content_title', title: @post.title), fix_url(@post.url) %>
+      <p><%= @post.description %></p>
+    </div>
+  </div>
 
-<%= render @post.categories   %>
-
-<div class="well">   
-  <dt>Description:</dt>
-  <dl>    
-    <%= @post.description %></dl>
-  <dl>    
-    <strong>URL:</strong> <%= link_to("Go there.",fix_url(@post.url)) %></dl>
+  <!--
+  <strong>URL:</strong> <%#= link_to("Go there.",fix_url(@post.url)) %></dl>
+  -->
 </div>
 
-<div class="well">   
-<h4><%= @post.comments.count %> Comments:</h4>    
-<%= render 'comments/comment', comments: @post.comments, show_vote: true, show_creator: true %>
+<div class="row">    
+  <!--! Create comment-->   
+  <%= render 'comments/form' %>
 </div>
 
-<%= render 'comments/form' %>
+<div class="row">       
+  <!--! Display all comments -->   
+  <h4><%= @post.comments.count %> Comments:</h4>    
+  <%= render 'comments/comment', comments: @post.comments, show_vote: true, show_creator: true %>
+</div>
+
+
 
 

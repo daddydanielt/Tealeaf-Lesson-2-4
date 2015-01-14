@@ -1,19 +1,19 @@
 
 <%= form_for @user do |f| %>
   <div class= 'well'>   
-    <div class='control-group'>
+    <div class='form-group'>
       <%= f.label :username %>
-      <%= f.text_field :username %>
+      <%= f.text_field :username, class: 'form-control' %>
     </div>
-    <div class='control-group'>
+    <div class='form-group'>
       <%= f.label :password %>
-      <%= f.password_field :password %>
+      <%= f.password_field :password, class: 'form-control' %>
     </div>
   
-    <div class='control-group'>
+    <div class='form-group'>
       <%= f.label :time_zone %>
       <%#= f.time_zone_select :time_zone, /Asia/, default: "Taipei" %>
-      <%= f.time_zone_select :time_zone, /Asia/, default:  Time.zone.name %>
+      <%= f.time_zone_select :time_zone, /Asia/, default:  Time.zone.name , class: 'form-control'%>
     </div>
 
     <%= f.submit (@user.new_record? ? "Register" : "Update Profile"), class: 'btn btn-success' %>

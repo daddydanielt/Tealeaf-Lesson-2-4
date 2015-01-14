@@ -10,46 +10,32 @@
 
 <%= form_for @post do |f| %>
   <div class="well">
-   
-    <!-- Testing -->
-    <%= f.button("testets") {content_tag(:strong, 'Ask me!')}%>
-    <%= f.button("testets") do %>
-    <% content_tag(:strong, 'Ask me!') %>
-    <% end %>
-
-
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :title %>
-      <%= f.text_field :title %>
+      <%= f.text_field :title, class: 'form-control' %>
     </div>
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :description %>  
-      <%= f.text_area :description, rows: 5 %>
+      <%= f.text_area :description, rows: 5, class: 'form-control' %>
     </div>
-    <div class="control-group">
+    <div class="form-group">
       <%= f.label :url %>  
-      <%= f.url_field :url %>
+      <%= f.url_field :url, class: 'form-control' %>
     </div>
 
-   
-     
-   <!-- Tetsing -->
-    <div class="control-group">
-    <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>
-      <% cb.label(class:"checkbox inline") do %> 
-      <% cb.check_box(class: "checkbox") + cb.text %>
-      <% end %>
-    <% end %>
+    <div class="form-group">
+    <%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %>                     
+      <% ("<div class='checkbox'>" + cb.label { cb.check_box(class: "checkbox") + cb.text } + "</div>").html_safe %>
+    <% end %>    
     </div>
-
 
     <%#Auto generate Submit Button%>
     <%#= f.button class:"btn btn-primary" %>
-    <div class="control-group">
+    <div class="form-group">
       <% if @post.new_record? %>     
-        <%= f.submit("Create", class: 'btn btn-primary') %>
+        <%= f.submit("Create", class: 'btn btn-default') %>
       <% else %>
-        <%= f.submit("Update", class: 'btn btn-primary') %>
+        <%= f.submit("Update", class: 'btn btn-default') %>
       <% end %>
     </div>
 

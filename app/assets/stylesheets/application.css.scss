@@ -13,28 +13,26 @@
  *= require_tree .
  */
 
+/*
+$navbar-default-bg: #312312;
+$light-orange: #ff8c00;
+$navbar-default-color: $light-orange;
+*/
 
+
+
+@import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap/variables"; // Modify this for custom colors, font-sizes, etc
 
 /* Tealeaf */
 /* filed_with_errors */
 
- .container {
-  margin-left: 135px
-}
-
-.navbar .nav > li > a.brand {
-  padding-left: 0px;
-}
 
 .quiet {
   color: #ababab;
 }
 
-div.nav_item {
-  margin-left: 25px;
-  float: left;
-}
 
 .label, .badge {
   a, a:hover, a:focus {
@@ -43,12 +41,8 @@ div.nav_item {
   }
 }
 
-div.comment_votes {
-  padding: 10px;
-}
 
 .field_with_errors {
-
-    background-color: red
+  background-color: red
 }
 

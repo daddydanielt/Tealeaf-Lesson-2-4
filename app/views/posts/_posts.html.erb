@@ -4,43 +4,66 @@
     <div id='<%= display_model_class_name_with_slug( p ) %>-votes-flash'></div>
   </div> 
 
-  <div class='row'>  
-    <div class="span0 text-center">      
-    <div class='row'>      
-      <% if logged_in? %>
-        <%= link_to vote_post_path(p, vote: true, test_other_param:"testing"), 
-                    method: :post, 
-                    remote: true,
-                    :confirm => "Are you sure to vote '#{p.title}'?", 
-                    test_your_attribute: "your_information"  do %>
-          <i class='icon-arrow-up'></i>            
+  <div class='row'>
+    <div class="col-md-1 text-center">
+      <div class="">
+        <div class='row'>      
+        <% if logged_in? %>
+          <%= link_to vote_post_path(p, vote: true, test_other_param:"testing"), 
+                        method: :post, 
+                        remote: true,
+                        :confirm => "Are you sure to vote '#{p.title}'?", 
+                        test_your_attribute: "your_information"  do %>
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+          <% end %>
+        <% else %>
+          <span class="glyphicon glyphicon-thumbs-up"></span>
         <% end %>
-      <% else %>
-        <i class='icon-arrow-up'></i>
-      <% end %>
-    </div>
-    <div class='row'>Toal: <span id='<%= display_model_class_name_with_slug( p ) %>-votes'><%= p.total_votes %></span></div>
-    <div class='row'>
-      <% if logged_in? %>
-        <%= link_to vote_post_path(p, vote: false), method: :post, remote: true do %>      
-          <i class='icon-arrow-down'></i>
-        <% end %>
-      <% else %>
-        <i class='icon-arrow-down'></i>
-      <% end %>
-    </div>
-    </div>      
-    <div class="span8 well">                 
-      <%= render p.categories %>                
-      <%= link_to (render 'shared/content_title', title: p.title), p.url  %>           
-      <% if p.description %>
-        <div>         
-          <%= p.description.split(" ").slice(0..3).join(" ") %>          
-          <%= link_to "... More", post_path(p) %></div>        
-      <% end %>
-      <div>        
-        <%= render 'shared/content_created_by_at', user_name: p.creator.username, user_name_slug: p.creator.slug, created_at: p.created_at %>
+        </div>
+
+        <div class='row'>Toal: <span id='<%= display_model_class_name_with_slug( p ) %>-votes'>
+          <%= p.total_votes %></span>
+        </div>
+
+        <div class='row'>
+          <% if logged_in? %>
+            <%= link_to vote_post_path(p, vote: false), method: :post, remote: true do %>      
+              <span class="glyphicon glyphicon-thumbs-down"></span>
+            <% end %>
+          <% else %>
+            <span class="glyphicon glyphicon-thumbs-down"></span>
+          <% end %>
+        </div>
       </div>
     </div>
+
+
+    <div class="col-md-8">
+      <div class="panel panel-default">
+      <div class="panel-body">
+        <!-- Category -->                
+        <%= render p.categories %>        
+        <!-- Title -->                
+        <%= link_to (render 'shared/content_title', title: p.title), p.url  %>           
+          
+        <!-- Description-->
+        <% if p.description %>
+          <div><%= p.description %></div>                
+        <% end %>
+          
+           
+          <!-- Creator -->                
+          <div>
+           <%= render 'shared/content_created_by_at', user_name: p.creator.username, user_name_slug: p.creator.slug, created_at: p.created_at %>
+          </div>
+          <!-- Comments -->                
+          <div>
+            <%= link_to "#{p.comments.size} comments", post_path(p) %> 
+          </div>
+      </div>
+      </div>
+      
+    </div>   
   </div>
+  
 <% end %>

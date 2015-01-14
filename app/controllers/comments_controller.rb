@@ -10,15 +10,18 @@ class CommentsController < ApplicationController
   def create    
     
     #@post = Post.find(params[:post_id])          
-    @post = Post.find_by(slug: params[:post_id])          
+    @post = Post.find_by(slug: params[:post_id])              
     
-    #@comment = Comment.new(params.require(:comment).permit(:body))  
-    #@comment.post = @post    
-    
-    @comment = @post.comments.build(params.require(:comment).permit(:body))  
-    #@comment.creator = User.first #TODO: change once we have authentication
+    #-->
+    @comment = Comment.new(params.require(:comment).permit(:body))  
+    @comment.post = @post    
     @comment.creator = current_user
-    
+    #-->
+    # this will add comment into memory, so @post.comments will contail one comment object no matter what @comment.save is true or false.
+    # it have to do @post.reload before you retrive the @post.comments 
+    #@comment = @post.comments.build(params.require(:comment).permit(:body))      
+    #@comment.creator = current_user
+    #-->
 
     if @comment.save      
       flash[:notice] = "Your comment was added"

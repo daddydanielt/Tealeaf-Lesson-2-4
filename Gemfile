@@ -19,19 +19,25 @@ group :daniel_test do
   #gem 'voteable_test', '= 0.0.0'
 
   # testing locally  
-  gem 'voteable_danielt_test', path: '/Users/iRSR/Documents/IT-Tealeaf/2-4-Lesson/Exercise/voteable-gem-3'
-  gem 'slugable_daniel_test', path: '/Users/iRSR/Documents/IT-Tealeaf/2-4-Lesson/Exercise/slugable-gem-1'
+  #gem 'voteable_danielt_test', path: '/Users/iRSR/Documents/IT-Tealeaf/2-4-Lesson/Exercise/voteable-gem-3'
+  gem 'voteable_danielt_test'
+  #gem 'slugable_daniel_test', path: '/Users/iRSR/Documents/IT-Tealeaf/2-4-Lesson/Exercise/slugable-gem-1'
+  gem 'slugable_daniel_test'
 end
 #===========>>
 
 
+#---->
+# Use SCSS for stylesheets
+gem 'sass-rails', '~> 4.0.3'
+# Use bootstrap-sass 
+gem 'bootstrap-sass', '~> 3.3.1'
 
 
 gem 'rails', '4.0.0'
-gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
-gem 'bootstrap-sass', '~> 2.3.2.0'
+
 
 # the OpenBSD bcrypt() password hashing algorithm
 # to perform one way hash

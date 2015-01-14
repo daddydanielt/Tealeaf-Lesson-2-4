@@ -1,7 +1,7 @@
 <% if vote.valid? %>
-  $('#<%= div_id.call( obj ) %>-votes').html("<%= obj.total_votes %>");  
+  $('#<%= div_id.call(obj) %>-votes').html("<%= obj.total_votes %>");  
 <% else %>    
-  show_alert('#<%= div_id.call( obj ) %>-votes-flash','alert-errors','You can only vote on this post once.');  
+  show_alert('#<%= div_id.call(obj) %>-votes-flash','alert-warning','You can only vote on this post once.');  
 <% end %>
 
 /**
@@ -16,6 +16,8 @@
 function show_alert(alert_placeholder,alerttype,message)
 {  
   $(alert_placeholder)
-  .append('<div id="alertdiv" class="span5 alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+  .append('<div id="alertdiv" class="alert ' +  alerttype + '"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
   .show();
 }
+
+

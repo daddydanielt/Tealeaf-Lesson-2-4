@@ -41,8 +41,7 @@
       flash[:notice] = "Your post was created."
       redirect_to posts_path      
     else      
-      #render 'new'  
-      binding.pry
+      #render 'new'        
       render :new
     end
     

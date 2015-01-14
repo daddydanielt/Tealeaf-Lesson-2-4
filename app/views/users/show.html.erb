@@ -18,14 +18,13 @@
     <%= link_to "Posts (#{@user.posts.size})", user_path(@user, tab: 'posts') %> 
   </li>
   <li class='<%= 'active' if params[:tab] == 'comments' %>'> 
-    <%= link_to "Comments (#{@user.comments.size})", user_path(@user, tab: 'comments') %>
+    <%= link_to "Comments (#{@user.comments.size})", user_path(@user, tab: 'comments', the_custom_query: 'hahaha') %>
   </li>
 </ul>
 
 <% if params[:tab].nil?|| params[:tab] == "posts" %>
-    <% @posts = @user.posts %>
-    <%= render 'posts/posts' %>
-  
+  <% @posts = @user.posts %>
+  <%= render 'posts/posts' %>  
 <% elsif params[:tab] = "comments" %>
   <%= render 'comments/comment', comments: @user.comments, show_post: true, show_vote: true %>  
 <% end %>
