@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   #===========>>
   # Daniel Tseng:
   # include your module_name
-  include SlugableDanielTest  
+  include SlugableDanielTest
   #===========>>
   slugable_column :username
 
