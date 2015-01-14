@@ -1,12 +1,9 @@
 source 'https://rubygems.org'
 
-
-
 #===========>>
 group :Haml do
   gem "haml"
 end
-
 #===========>>
 
 #===========>>
